@@ -1,8 +1,8 @@
 from typing import Optional
 from sqlalchemy.orm import Session
-from . models import Emp
+from . models import User
 
-async def is_email_exist(email: str, db_session: Session) -> Optional[Emp]:
+async def is_email_exist(email: str, db_session: Session) -> Optional[User]:
     """
     A  method for checking email duplication
 
@@ -10,4 +10,4 @@ async def is_email_exist(email: str, db_session: Session) -> Optional[Emp]:
     :param db_session:
     :return:
     """
-    return db_session.query(Emp).filter(Emp.email == email).first()
+    return db_session.query(User).filter(User.email == email).first()

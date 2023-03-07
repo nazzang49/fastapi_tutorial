@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from src.user import router as emp_router
+from src.user import router as user_router
 
 app = FastAPI()
 
@@ -9,4 +9,4 @@ async def root():
         "Hello": "World"
     }
 
-app.include_router(emp_router.api_router)
+app.include_router(user_router.router)

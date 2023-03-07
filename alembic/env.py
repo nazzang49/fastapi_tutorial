@@ -22,7 +22,7 @@ if config.config_file_name is not None:
 
 from src.db import Base
 from src import config as config_env
-from src.user.models import Emp
+from src.user.models import User
 
 target_metadata = Base.metadata
 

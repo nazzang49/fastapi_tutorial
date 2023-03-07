@@ -4,7 +4,7 @@ from src.db import Base
 from . import hashing
 
 
-class Emp(Base):
+class User(Base):
     __tablename__ = "emp"
 
     ######################

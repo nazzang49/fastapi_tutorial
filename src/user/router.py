@@ -5,16 +5,27 @@ from . import schema
 from . import validator
 from . import services
 
-api_router = APIRouter(tags=["emp"], prefix="/emp")
+router = APIRouter(tags=["user"], prefix="/user")
 
-@api_router.post("/register", status_code=status.HTTP_200_OK)
-async def create_emp_registration(request: schema.Emp, database: Session = Depends(db.get_db)):
-    emp = await validator.is_email_exist(request.email, database)
-    if emp:
+@router.post("", status_code=status.HTTP_200_OK)
+async def create_user(request: schema.User, database: Session = Depends(db.get_db)):
+    """
+    A method for creating new user
+
+    :param request:
+    :param database:
+    :return:
+    """
+    user = await validator.is_email_exist(request.email, database)
+    if user:
         raise HTTPException(
             status_code=400,
             detail="Email Already Exist. Try Another!"
         )
 
-    registered_emp = await services.register_emp(request, database)
-    return registered_emp
+    registered_user = await services.create_user(request, database)
+    return registered_user
+
+@router.get('/{user_id}', response_model=schema.UserItem)
+async def get_user_by_id(user_id: int, database: Session = Depends(db.get_db)):
+    return await services.get_user_by_id(user_id, database)
