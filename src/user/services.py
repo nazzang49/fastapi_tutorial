@@ -17,7 +17,6 @@ async def create_user(request, database) -> models.User:
     database.refresh(emp)
     return emp
 
-
 async def get_user_by_id(user_id, database) -> Optional[models.User]:
     """
     A method for getting user by id
@@ -30,3 +29,16 @@ async def get_user_by_id(user_id, database) -> Optional[models.User]:
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="NOT_FOUND_USER")
     return user
+
+
+async def get_users(database):
+    """
+    A method for getting users
+
+    :param database:
+    :return:
+    """
+    users = database.query(models.User).all()
+    if not users:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="EMPTY_USERS")
+    return users

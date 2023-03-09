@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from src import db
@@ -26,6 +28,10 @@ async def create_user(request: schema.User, database: Session = Depends(db.get_d
     registered_user = await services.create_user(request, database)
     return registered_user
 
-@router.get('/{user_id}', response_model=schema.UserItem)
+@router.get("/{user_id}", response_model=schema.UserItem)
 async def get_user_by_id(user_id: int, database: Session = Depends(db.get_db)):
     return await services.get_user_by_id(user_id, database)
+
+@router.get("", response_model=List[schema.UserItem])
+async def get_users(database: Session = Depends(db.get_db)):
+    return await services.get_users(database)
